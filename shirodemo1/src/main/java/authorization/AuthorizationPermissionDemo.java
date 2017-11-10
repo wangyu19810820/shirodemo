@@ -3,6 +3,7 @@ package authorization;
 import configuration.ini.ConfigureFromIniFile;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.Permission;
+import org.apache.shiro.authz.permission.WildcardPermission;
 import org.apache.shiro.subject.Subject;
 
 import java.util.Arrays;
@@ -17,6 +18,7 @@ public class AuthorizationPermissionDemo {
 
         System.out.println(currentUser.isPermitted("winnebago:ss:eagle5"));
         System.out.println(currentUser.isPermitted("winnebago:ss:aa"));
+        System.out.println(currentUser.isPermitted(new WildcardPermission("winnebago:ss:eagle5")));
 
         System.out.println(Arrays.toString(currentUser.isPermitted(
                 "winnebago:ss:eagle5", "lightsaber", "aaa")));
@@ -28,7 +30,9 @@ public class AuthorizationPermissionDemo {
 
         currentUser.checkPermission("winnebago:ss:eagle5");
         currentUser.checkPermissions("winnebago:ss:eagle5", "lightsaber");
-        currentUser.checkPermissions("winnebago:ss:eagle5", "lightsaber", "aaa");
+        currentUser.checkPermissions(Arrays.asList(
+                new WildcardPermission("winnebago:ss:eagle5"),
+                new WildcardPermission("lightsaber")));        currentUser.checkPermissions("winnebago:ss:eagle5", "lightsaber", "aaa");
     }
 }
 
