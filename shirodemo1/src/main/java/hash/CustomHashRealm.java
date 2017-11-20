@@ -5,6 +5,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.SimpleByteSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,13 +20,14 @@ public class CustomHashRealm extends AuthorizingRealm {
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        String salt = "rFFpkcTR8yRNueTT9/CnXQ==";
-        String password = "oYnvAYVKeVWzjH/8RlCp3zS4s3zmye/lx4Kd5JKVyYA=";
-        String pwd = "aefc8a8af393f536d9918ee9166a7f1584025b541df5d38b09f3d74ddc0dcd95";
-
-        UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         String useName = ((UsernamePasswordToken) authenticationToken).getUsername();
+        String salt = "0ef77cfb7aafd7a2022ceb8552acfabe";
+//        String password = "ca784fcc60db4319c6b8ef327e9fa284b55c9d652b96ddbc4e755624e52fecb1";
+        String password = "ynhPzGDbQxnGuO8yfp+ihLVcnWUrlt28TnVWJOUv7LE=";
 
-        return new SimpleAuthenticationInfo(useName, pwd, "CustomHashRealm");
+        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(useName, password, "CustomHashRealm");
+        authenticationInfo.setCredentialsSalt(new SimpleByteSource(salt));
+
+        return authenticationInfo;
     }
 }
