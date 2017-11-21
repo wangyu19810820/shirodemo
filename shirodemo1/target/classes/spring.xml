@@ -15,14 +15,22 @@
    
     
     <context:annotation-config/>
-    <!-- 扫描注解 -->
-	<context:component-scan base-package="com.hsnn.basic.common">
-		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-	</context:component-scan>
 
-	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 
-    <context:annotation-config />
-	<import resource="spring-shiro.xml"/>
+
+	<bean id="securityManager" class="org.apache.shiro.mgt.DefaultSecurityManager">
+		<property name="realms">
+			<list>
+				<bean id="myRealm1" class="realm.MyRealm1"></bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"></bean>
+
+	<bean class="org.springframework.beans.factory.config.MethodInvokingBean">
+		<property name="staticMethod" value="org.apache.shiro.SecurityUtils.setSecurityManager"></property>
+		<property name="arguments" ref="securityManager"></property>
+	</bean>
 
 </beans>
