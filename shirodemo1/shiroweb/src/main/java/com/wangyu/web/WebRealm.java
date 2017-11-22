@@ -12,6 +12,8 @@ public class WebRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+        authorizationInfo.addRole("goodguy");
+        authorizationInfo.addStringPermission("user:query");
         return authorizationInfo;
     }
 

@@ -25,4 +25,17 @@ public class LoginController {
         System.out.println(subject.isAuthenticated());
         return "/demo";
     }
+
+    @RequestMapping("/index2")
+    public String index2() throws Exception {
+        return "/demo";
+    }
+
+    @RequestMapping("/logout")
+    public String logout() throws Exception {
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+//        System.out.println(subject.isAuthenticated());
+        return "redirect:/login1.jsp";
+    }
 }

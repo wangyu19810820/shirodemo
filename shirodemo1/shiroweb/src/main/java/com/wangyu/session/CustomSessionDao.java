@@ -1,18 +1,12 @@
 package com.wangyu.session;
 
-import org.apache.shiro.cache.Cache;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.SimpleSession;
 import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcOperations;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Collections;
 
 public class CustomSessionDao extends EnterpriseCacheSessionDAO {
 
