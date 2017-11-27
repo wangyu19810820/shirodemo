@@ -16,15 +16,16 @@
     
     <context:annotation-config/>
 
-
-
 	<bean id="securityManager" class="org.apache.shiro.mgt.DefaultSecurityManager">
 		<property name="realms">
 			<list>
-				<bean id="myRealm1" class="realm.MyRealm1"></bean>
+				<ref bean="myRealm1"></ref>
+				<ref bean="myRealm2"></ref>
 			</list>
 		</property>
 	</bean>
+	<bean id="myRealm1" class="realm.MyRealm1"></bean>
+	<bean id="myRealm2" class="realm.MyRealm2"></bean>
 
 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"></bean>
 
