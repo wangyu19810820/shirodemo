@@ -1,10 +1,17 @@
 package com.wangyu.config;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.init.DataSourceInitializer;
+import org.springframework.jdbc.datasource.init.DatabasePopulator;
+import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 import javax.sql.DataSource;
 
@@ -13,13 +20,51 @@ import javax.sql.DataSource;
  */
 @Configuration
 public class DatabaseConfig {
+
+    @Value("classpath:init.sql")
+    private Resource dataScript;
+
+//    @Bean(name = "dataSource")
+//    public DataSource getDataSource(){
+//        DataSource dataSource = dataSource();
+//        DatabasePopulatorUtils.execute(createDatabasePopulator(), dataSource);
+//        return dataSource;
+//    }
+//
+//    private DatabasePopulator createDatabasePopulator() {
+//        ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
+//        databasePopulator.setContinueOnError(true);
+//        databasePopulator.addScript(new ClassPathResource("init.sql"));
+//        return databasePopulator;
+//    }
+
+//    @Bean
+//    public DataSourceInitializer dataSourceInitializer(final DataSource dataSource) {
+//        final DataSourceInitializer initializer = new DataSourceInitializer();
+//        initializer.setDataSource(dataSource);
+//        initializer.setDatabasePopulator(databasePopulator());
+//        return initializer;
+//    }
+//
+//    private DatabasePopulator databasePopulator() {
+//        final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+//        populator.addScript(dataScript);
+//        return populator;
+//    }
+
     @Bean
-    public DataSource dataSource() {
+    public DriverManagerDataSource dataSource() {
         DriverManagerDataSource ds = new DriverManagerDataSource();
-        ds.setDriverClassName("org.h2.Driver");
-        ds.setUrl("jdbc:h2:tcp://localhost/mem:test");
-        ds.setUsername("sa");
-        ds.setPassword("");
+//        ds.setDriverClassName("org.h2.Driver");
+//        ds.setUrl("jdbc:h2:mem:test");
+//        ds.setUsername("sa");
+//        ds.setPassword("");
+
+        ds.setDriverClassName("com.mysql.jdbc.Driver");
+        ds.setUrl("jdbc:mysql://127.0.0.1:3306/test");
+        ds.setUsername("root");
+        ds.setPassword("1111");
+
         return ds;
     }
 
@@ -72,6 +117,7 @@ public class DatabaseConfig {
 
     @Bean
     public JdbcOperations jdbcTemplate(DataSource dataSource) {
-        return new JdbcTemplate(dataSource);
+        JdbcOperations jdbcOperations = new JdbcTemplate(dataSource);
+        return jdbcOperations;
     }
 }

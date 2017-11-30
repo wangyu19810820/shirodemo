@@ -36,10 +36,26 @@
         </property>
     </bean>
 
-
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="myRealm"/>
+        <property name="sessionManager" ref="sessionManager"></property>
     </bean>
+
+    <bean id="sessionDao" class="com.wangyu.session.CustomSessionDao"></bean>
+
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <property name="globalSessionTimeout" value="3000"></property>
+        <property name="deleteInvalidSessions" value="true"/>
+        <property name="sessionValidationSchedulerEnabled" value="true"></property>
+        <property name="sessionValidationScheduler" ref="sessionValidationScheduler"></property>
+        <property name="sessionDAO" ref="sessionDao"></property>
+    </bean>
+
+    <bean id="sessionValidationScheduler" class="org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler">
+        <property name="interval" value="20000"></property>
+        <property name="sessionManager" ref="sessionManager"></property>
+    </bean>
+
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
 
     <!-- Define the Shiro Realm implementation you want to use to connect to your back-end -->

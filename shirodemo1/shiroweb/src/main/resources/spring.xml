@@ -19,11 +19,14 @@
     <!-- 扫描注解 -->
 	<context:component-scan base-package="com.wangyu.session"></context:component-scan>
 
+	<bean class="com.wangyu.config.DatabaseConfig"/>
+	<bean id="springContextHelper" class="com.wangyu.session.SpringContextHelper"></bean>
+
+	<!--<jdbc:initialize-database data-source="dataSource" enabled="true">-->
+		<!--<jdbc:script location="classpath:init.sql" />-->
+	<!--</jdbc:initialize-database>-->
+
 	<!-- 旧的配置方式 -->
-	<!--<bean class="com.wangyu.config.DatabaseConfig"/>-->
-
-	<!--<bean id="springContextHelper" class="com.wangyu.session.SpringContextHelper"></bean>-->
-
 	<!--<bean id="shiro" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">-->
 		<!--<property name="securityManager" ref="securityManager"></property>-->
 	<!--</bean>-->
